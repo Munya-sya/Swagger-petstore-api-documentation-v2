@@ -1,0 +1,697 @@
+swagger: "2.0"  
+info: 
+  description: "This is a sample server Fake Store API server.  You can find out more about this at [https://fakestoreapi.com/docs](https://fakestoreapi.com/docs)." 
+  version: "1.0.0" 
+  title: "Fake Store API" 
+  termsOfService: "https://fakestoreapi.com/docs" 
+  contact: 
+    email: "apiteam@swagger.io" 
+  license: 
+    name: "Apache 2.0" 
+    url: "https://fakestoreapi.com/docs" 
+host: "fakestoreapi.com" 
+tags: 
+- name: "Products" 
+  description: "Everything about your Products" 
+  externalDocs: 
+    description: "Find out more" 
+    url: "https://fakestoreapi.com/docs" 
+- name: "Carts" 
+  description: "Access to Product orders" 
+- name: "Users" 
+  description: "Operations about user" 
+  externalDocs: 
+    description: "Find out more about our store" 
+    url: "https://fakestoreapi.com/docs" 
+schemes: 
+- "https" 
+- "http" 
+paths: 
+  /products:
+# The link is: 'https://fakestoreapi.com/products?limit=5' 
+    get:
+      tags:
+      - "Products"
+      summary: "Get products by limiting"
+      description: ""
+      operationId: "Get products by limiting"
+      produces:
+      - "application/json"
+      parameters: 
+      - name: "limit"
+        in: "query"
+        description: "Limit display by number stated"
+        required: true
+        type: "array"
+        items:
+          type: "integer"
+          enum:
+          - 1
+          - 5
+          - 10
+          - 15
+          - 20
+          default: 10
+        collectionFormat: "multi"
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Products"
+      security: 
+      - store_auth: 
+        - "write:products" 
+        - "read:products"
+# The link is: 'https://fakestoreapi.com/products'
+    post:
+      tags:
+      - "Products"
+      summary: "Enter a product"
+      description: ""
+      operationId: "Enter a product"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema: 
+          $ref: "#/definitions/Products"
+      responses:
+        "405":
+          description: "Invalid Input"
+        "200":
+          description: "Successful Input"
+  /products/{id}:
+# The link is 'https://fakestoreapi.com/products/1'
+    get: 
+      tags:
+      - "Products"
+      summary: "Get product by ID"
+      description: ""
+      operationId: "Get product by ID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Products"
+# the link is: 'https://fakestoreapi.com/products/7'
+    put:
+      tags:
+      - "Products"
+      summary: "Update a product"
+      description: ""
+      operationId: "Update a product"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "d that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Products"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+# the link is: 'https://fakestoreapi.com/products/7'
+    patch:
+      tags:
+      - "Products"
+      summary: "Update a product (patch)"
+      description: ""
+      operationId: "Update a product(patch)"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Products"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+#The link is: https://fakestoreapi.com/products/6
+    delete:
+      tags:
+      - "Products"
+      summary: "Delete a product"
+      description: ""
+      operationId: "Delete a product"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id that needs to be Deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "success"
+# The link is 'https://fakestoreapi.com/products/categories'
+  /products/categories:
+    get: 
+      tags:
+      - "Products"
+      summary: "Get all categories"
+      description: ""
+      operationId: "Get all categories"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Products"
+# The link is: 'https://fakestoreapi.com/products/category/jewelery'
+  /products/category/{category}:
+    get:
+      tags:
+      - "Products"
+      summary: "Get products in a specific category"
+      description: ""
+      operationId: "Get products in a specific category"
+      produces:
+      - "application/json"
+      parameters: 
+      - name: "category"
+        in: "path"
+        description: "Get products in a specific category"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+          - "electronics"
+          - "jewelery"
+          - "men's clothing"
+          - "women's clothing"
+          default: "jewelery"
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Products"
+# The link is: 'https://fakestoreapi.com/carts?limit=5' 
+  /carts:
+    get:
+      tags:
+      - "Carts"
+      summary: "Get cart products by limiting"
+      description: ""
+      operationId: "Get cart products by limiting"
+      produces:
+      - "application/json"
+      parameters: 
+      - name: "limit"
+        in: "query"
+        description: "Limit display by number stated"
+        required: true
+        type: "array"
+        items:
+          type: "integer"
+          enum:
+          - 1
+          - 5
+          - 10
+          - 15
+          - 20
+          default: 10
+        collectionFormat: "multi"
+      responses:
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Carts"
+# The link is: 'https://fakestoreapi.com/carts'
+    post:
+      tags:
+      - "Carts"
+      summary: "Enter a product to cart"
+      description: ""
+      operationId: "Enter a product  to cart"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema: 
+          $ref: "#/definitions/Carts"
+      responses:
+        "405":
+          description: "Invalid Input"
+        "200":
+          description: "Successful Input"
+          
+  /carts/{id}:
+# the link is: 'https://fakestoreapi.com/carts/7'
+    put:
+      tags:
+      - "Carts"
+      summary: "Update a cart product"
+      description: ""
+      operationId: "Update a cart product"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Carts"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+# the link is: 'https://fakestoreapi.com/carts/7'
+    patch:
+      tags:
+      - "Carts"
+      summary: "Update a carts product (patch)"
+      description: ""
+      operationId: "Update a carts product(patch)"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Carts"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+#The link is: https://fakestoreapi.com/carts/6
+    delete:
+      tags:
+      - "Carts"
+      summary: "Delete a cart product"
+      description: ""
+      operationId: "Delete a cart product"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id that needs to be Deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "success"
+    # The link is 'https://fakestoreapi.com/products/1'
+    get: 
+      tags:
+      - "Carts"
+      summary: "Get product cart range by ID"
+      description: ""
+      operationId: "Get product cart range by ID"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Carts"
+# The link is: 'https://fakestoreapi.com/carts/user/2'
+  /carts/user/{id}:
+    get: 
+      tags:
+      - "Carts"
+      summary: "Get user carts"
+      description: ""
+      operationId: "Get user carts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Carts"
+# The link is: 'https://fakestoreapi.com/users'
+  /users:
+    get:
+      tags:
+      - "Users"
+      summary: "Get all user"
+      description: ""
+      operationId: "Get all users"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successful"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Users"
+    # The link is: 'https://fakestoreapi.com/carts'
+    post:
+      tags:
+        - "Users"
+      summary: "Enter a User"
+      description: ""
+      operationId: "Enter a User"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema: 
+          $ref: "#/definitions/Users"
+      responses:
+        "405":
+          description: "Invalid Input"
+        "200":
+          description: "Successful Input"
+  /users/{id}:
+     put:
+      tags:
+      - "Users"
+      summary: "Update a user"
+      description: ""
+      operationId: "Update a user"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Users"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+# the link is: 'https://fakestoreapi.com/carts/7'
+     patch:
+      tags:
+      - "Users"
+      summary: "Update a users (patch)"
+      description: ""
+      operationId: "Update a users (patch)"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that needs to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Updated Section"
+        required: true
+        schema: 
+          $ref: "#/definitions/Users"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "Successfully Updated"
+#The link is: https://fakestoreapi.com/carts/6
+     delete:
+      tags:
+      - "Carts"
+      summary: "Delete a User"
+      description: ""
+      operationId: "Delete a User"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Id that needs to be Deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID number"
+        "404":
+          description: "Product not found"
+        "200":
+          description: "success"
+  /auth/login:
+     post:
+      tags:
+        - "Users Login"
+      summary: "Enter the Username and Password"
+      description: ""
+      operationId: "Enter  the Username and Password"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: ""
+        required: true
+        schema: 
+          type: "object"
+          properties:
+            username:
+              type: "string"
+              example: "mor_2314"
+            password:
+              type: "string"
+              example: "83r5^_"
+      responses:
+        "405":
+          description: "Invalid Input"
+        "200":
+          description: "Successful Input" 
+securityDefinitions: 
+  store_auth: 
+    type: "oauth2" 
+    authorizationUrl: "https://fakestoreapi.com/auth/login" 
+    flow: "implicit" 
+    scopes: 
+      write:products: "modify products in your account" 
+      read:products: "read your products" 
+definitions:
+  Products:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        example: "Watch"
+      price:
+        type: "number"
+        format: "double"
+        example: "1000.00"
+      category:
+        type: "string"
+        example: "electronic"
+      description:
+        type: "string"
+        example: "Very good quality"
+      image: 
+        type: "string"
+        example: "https://images.unsplash.com/photo-1622434641406-a158123450f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fHdhdGNofGVufDB8fDB8fA%3D%3D&w=1000&q=80"
+  Carts:
+    type: "object"
+    properties:
+      userId:
+        type: "integer"
+        example: 1
+      date:
+        type: "string"
+        format: "date"
+        example: "2019-10-10"
+      products:
+        $ref: "#/definitions/ProductDetails"
+  ProductDetails:
+    type: "object"
+    properties:
+      productId:
+        type: "integer"
+        example: 2
+      quantity:
+        type: "integer"
+        example: 5
+  Users:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        example: "John@gmail.com"
+      username:
+        type: "string"
+        example: "johnd"
+      password:
+        type: "string"
+        format: "password"
+        example: "m38rmF$"
+      name:
+        $ref: "#/definitions/customername"
+      address:
+        $ref: "#/definitions/customeraddress"
+      phone:
+        type: "string"
+        format: "phone"
+        example: "1-570-236-7033"
+  customername:
+    type: "object"
+    properties:
+      firstname:
+        type: "string"
+        example: "John"
+      lastname:
+        type: "string"
+        example: "Doe"
+  customeraddress:
+    type: "object"
+    properties:
+      city:
+        type: "string"
+        example: "Kilcoole"
+      street:
+        type: "string"
+        example: "7835 new road"
+      number:
+        type: "integer"
+        example: 3
+      zipcode:
+        type: "string"
+        example: "12926-3874"
+      geolocation:
+         $ref: "#/definitions/geolocations"
+  geolocations:
+    type: "object"
+    properties:
+      lat:
+        type: "string"
+        example: "-37.3159"
+      long:
+        type: 'string'
+        example: "81.1496"
